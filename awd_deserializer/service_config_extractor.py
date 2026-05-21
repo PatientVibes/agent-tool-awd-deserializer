@@ -21,16 +21,21 @@ Security: Input validation, safe JSON generation, content sanitization
 Performance: Efficient service processing, memory optimization for large configs
 """
 
-import os
 import json
 import logging
+import os
 import re
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any, Tuple
 from pathlib import Path
+from typing import Any
 
 from .awd_data_parser import AWDComponent, ComponentType, parse_awd_json
-from .component_extractor import ComponentExtractor, ExtractionContext, ExtractionResult, ComponentMetadata
+from .component_extractor import (
+    ComponentExtractor,
+    ComponentMetadata,
+    ExtractionContext,
+    ExtractionResult,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -41,45 +46,45 @@ class ServiceConfigInfo:
     service_id: str
     service_name: str
     service_type: str
-    variables: List[Dict[str, Any]]
-    inputs: List[Dict[str, Any]]
-    outputs: List[Dict[str, Any]]
-    process_config: Dict[str, Any]
-    form_data: Optional[Dict[str, Any]] = None
-    validation_errors: List[str] = field(default_factory=list)
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    variables: list[dict[str, Any]]
+    inputs: list[dict[str, Any]]
+    outputs: list[dict[str, Any]]
+    process_config: dict[str, Any]
+    form_data: dict[str, Any] | None = None
+    validation_errors: list[str] = field(default_factory=list)
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class ServiceConfigExtractor(ComponentExtractor):
     """
     Extracts service configurations from AWD components.
     """
-    
+
     def __init__(self):
         """Initialize the service configuration extractor."""
         super().__init__("ServiceConfigExtractor")
-        self.extracted_services: List[ServiceConfigInfo] = []
-    
+        self.extracted_services: list[ServiceConfigInfo] = []
+
     @property
     def component_type(self) -> str:
         return "services"
-    
+
     @property
-    def supported_formats(self) -> List[str]:
+    def supported_formats(self) -> list[str]:
         return ["json"]
-        
-    def extract_services(self, awd_json: Dict[str, Any]) -> List[ServiceConfigInfo]:
+
+    def extract_services(self, awd_json: dict[str, Any]) -> list[ServiceConfigInfo]:
         """Extract all service configurations from AWD JSON data."""
         logger.info("Starting service configuration extraction")
-        
+
         # Parse AWD components to find service data
         components = parse_awd_json(awd_json)
         service_components = [c for c in components if c.component_type in [ComponentType.BPMN_PROCESS, ComponentType.SERVICE_CONFIG]]
-        
+
         logger.info(f"Found {len(service_components)} potential service components")
-        
+
         self.extracted_services.clear()
-        
+
         for component in service_components:
             try:
                 # Extract service configuration from component
@@ -87,37 +92,37 @@ class ServiceConfigExtractor(ComponentExtractor):
                 if service_info:
                     self.extracted_services.append(service_info)
                     logger.debug(f"Extracted service config: {service_info.service_name}")
-                
+
             except Exception as e:
                 logger.error(f"Error extracting service config from component {component.name}: {e}")
-        
+
         logger.info(f"Service configuration extraction complete. {len(self.extracted_services)} services extracted")
         return self.extracted_services
-    
-    def _extract_service_config(self, component: AWDComponent) -> Optional[ServiceConfigInfo]:
+
+    def _extract_service_config(self, component: AWDComponent) -> ServiceConfigInfo | None:
         """Extract service configuration from a single AWD component."""
         try:
             # Find ServiceData or similar service definitions
             service_data = self._find_service_data(component.data)
             if not service_data:
                 return None
-            
+
             # Extract service metadata
             service_id = self._extract_service_id(service_data)
             service_name = self._extract_service_name(service_data)
             service_type = self._extract_service_type(service_data)
-            
+
             # Extract form data if available
             form_data = self._extract_form_data(service_data)
-            
+
             # Extract service variables, inputs, and outputs
             variables = self._extract_service_variables(service_data, form_data)
             inputs = self._extract_service_inputs(service_data, form_data)
             outputs = self._extract_service_outputs(service_data, form_data)
-            
+
             # Create process configuration
             process_config = self._create_process_config(service_data, form_data, variables, inputs, outputs)
-            
+
             return ServiceConfigInfo(
                 service_id=service_id,
                 service_name=service_name,
@@ -135,12 +140,12 @@ class ServiceConfigExtractor(ComponentExtractor):
                     "has_form": form_data is not None
                 }
             )
-            
+
         except Exception as e:
             logger.error(f"Error extracting service config: {e}")
             return None
-    
-    def _find_service_data(self, data: Any) -> Optional[Dict[str, Any]]:
+
+    def _find_service_data(self, data: Any) -> dict[str, Any] | None:
         """Find ServiceData objects in the AWD structure."""
         if isinstance(data, str):
             # Check if this string contains service-related content
@@ -151,7 +156,7 @@ class ServiceConfigExtractor(ComponentExtractor):
             # Check if this dict contains service information
             if any(key in data for key in ['definition', 'name', 'type', 'id', 'serviceModelId']):
                 return data
-            
+
             # Look for specific keys that might contain service data
             for key in ['definition', 'content', 'data', '_value']:
                 if key in data:
@@ -161,7 +166,7 @@ class ServiceConfigExtractor(ComponentExtractor):
                     result = self._find_service_data(value)
                     if result:
                         return result
-            
+
             # Recursively search in nested structures
             for value in data.values():
                 result = self._find_service_data(value)
@@ -172,20 +177,20 @@ class ServiceConfigExtractor(ComponentExtractor):
                 result = self._find_service_data(item)
                 if result:
                     return result
-        
+
         return None
-    
-    def _extract_service_from_string(self, content: str) -> Optional[Dict[str, Any]]:
+
+    def _extract_service_from_string(self, content: str) -> dict[str, Any] | None:
         """Extract service information from string content."""
         if not content:
             return None
-        
+
         # Try to find BPMN process definitions
         bpmn_match = re.search(r'<bpmn:process[^>]*id="([^"]*)"[^>]*name="([^"]*)"', content)
         if bpmn_match:
             process_id = bpmn_match.group(1)
             process_name = bpmn_match.group(2)
-            
+
             # Create a mock service data structure
             return {
                 "id": process_id,
@@ -194,14 +199,14 @@ class ServiceConfigExtractor(ComponentExtractor):
                 "definition": content,
                 "serviceModelId": hash(process_id) % 1000000000
             }
-        
+
         return None
-    
-    def _extract_service_id(self, service_data: Dict[str, Any]) -> str:
+
+    def _extract_service_id(self, service_data: dict[str, Any]) -> str:
         """Extract service ID from service data."""
         return service_data.get("id", service_data.get("serviceModelId", "unknown_service"))
-    
-    def _extract_service_name(self, service_data: Dict[str, Any]) -> str:
+
+    def _extract_service_name(self, service_data: dict[str, Any]) -> str:
         """Extract service name from service data."""
         name = service_data.get("name", "")
         if not name:
@@ -211,14 +216,14 @@ class ServiceConfigExtractor(ComponentExtractor):
                 bpmn_match = re.search(r'name="([^"]*)"', definition)
                 if bpmn_match:
                     name = bpmn_match.group(1)
-        
+
         return name or "Unknown Service"
-    
-    def _extract_service_type(self, service_data: Dict[str, Any]) -> str:
+
+    def _extract_service_type(self, service_data: dict[str, Any]) -> str:
         """Extract service type from service data."""
         return service_data.get("type", service_data.get("modeltype", "PRESENTATION_FLOW"))
-    
-    def _extract_form_data(self, service_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+
+    def _extract_form_data(self, service_data: dict[str, Any]) -> dict[str, Any] | None:
         """Extract form data associated with the service."""
         # Look for UXBuilderFormData in the service definition
         definition = service_data.get("definition", "")
@@ -231,13 +236,13 @@ class ServiceConfigExtractor(ComponentExtractor):
                     return form_data
                 except json.JSONDecodeError:
                     pass
-        
+
         return None
-    
-    def _extract_service_variables(self, service_data: Dict[str, Any], form_data: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _extract_service_variables(self, service_data: dict[str, Any], form_data: dict[str, Any] | None) -> list[dict[str, Any]]:
         """Extract service variable definitions."""
         variables = []
-        
+
         if form_data and "values" in form_data:
             # Extract variables from form fields
             for field in form_data["values"]:
@@ -250,7 +255,7 @@ class ServiceConfigExtractor(ComponentExtractor):
                         "complex": False
                     }
                     variables.append(variable)
-        
+
         # Add computed variables
         variables.extend([
             {
@@ -268,13 +273,13 @@ class ServiceConfigExtractor(ComponentExtractor):
                 "complex": False
             }
         ])
-        
+
         return variables
-    
-    def _extract_service_inputs(self, service_data: Dict[str, Any], form_data: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _extract_service_inputs(self, service_data: dict[str, Any], form_data: dict[str, Any] | None) -> list[dict[str, Any]]:
         """Extract service input parameters."""
         inputs = []
-        
+
         if form_data and "values" in form_data:
             # Extract inputs from form fields
             for field in form_data["values"]:
@@ -287,13 +292,13 @@ class ServiceConfigExtractor(ComponentExtractor):
                         "isDataDictionary": field.get("isDataDictionary", False)
                     }
                     inputs.append(input_param)
-        
+
         return inputs
-    
-    def _extract_service_outputs(self, service_data: Dict[str, Any], form_data: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _extract_service_outputs(self, service_data: dict[str, Any], form_data: dict[str, Any] | None) -> list[dict[str, Any]]:
         """Extract service output parameters."""
         outputs = []
-        
+
         # Add standard outputs for interview services
         if "Interview" in self._extract_service_name(service_data):
             outputs.extend([
@@ -319,16 +324,16 @@ class ServiceConfigExtractor(ComponentExtractor):
                     "complex": False
                 }
             ])
-        
+
         return outputs
-    
-    def _create_process_config(self, service_data: Dict[str, Any], form_data: Optional[Dict[str, Any]], 
-                              variables: List[Dict[str, Any]], inputs: List[Dict[str, Any]], 
-                              outputs: List[Dict[str, Any]]) -> Dict[str, Any]:
+
+    def _create_process_config(self, service_data: dict[str, Any], form_data: dict[str, Any] | None,
+                              variables: list[dict[str, Any]], inputs: list[dict[str, Any]],
+                              outputs: list[dict[str, Any]]) -> dict[str, Any]:
         """Create complete process configuration."""
         service_id = self._extract_service_id(service_data)
         service_name = self._extract_service_name(service_data)
-        
+
         return {
             "serviceId": service_id,
             "serviceName": service_name,
@@ -347,54 +352,54 @@ class ServiceConfigExtractor(ComponentExtractor):
             "inputCount": len(inputs),
             "outputCount": len(outputs)
         }
-    
-    def save_service_configs(self, output_dir: Path) -> List[Path]:
+
+    def save_service_configs(self, output_dir: Path) -> list[Path]:
         """Save extracted service configurations to separate JSON files."""
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
-        
+
         saved_files = []
-        
+
         for service in self.extracted_services:
             try:
                 # Create service directory
                 service_dir = output_dir / f"{service.service_name.replace(' ', '_').replace('-', '_')}"
                 service_dir.mkdir(parents=True, exist_ok=True)
-                
+
                 # Save variables.json
                 variables_file = service_dir / "variables.json"
                 with open(variables_file, 'w', encoding='utf-8') as f:
                     json.dump(service.variables, f, indent=2)
                 saved_files.append(variables_file)
-                
+
                 # Save inputs.json
                 inputs_file = service_dir / "inputs.json"
                 with open(inputs_file, 'w', encoding='utf-8') as f:
                     json.dump(service.inputs, f, indent=2)
                 saved_files.append(inputs_file)
-                
+
                 # Save outputs.json
                 outputs_file = service_dir / "outputs.json"
                 with open(outputs_file, 'w', encoding='utf-8') as f:
                     json.dump(service.outputs, f, indent=2)
                 saved_files.append(outputs_file)
-                
+
                 # Save process_config.json
                 config_file = service_dir / "process_config.json"
                 with open(config_file, 'w', encoding='utf-8') as f:
                     json.dump(service.process_config, f, indent=2)
                 saved_files.append(config_file)
-                
+
                 logger.info(f"Saved service configuration for '{service.service_name}' to: {service_dir}")
-                
+
             except Exception as e:
                 logger.error(f"Error saving service configuration {service.service_name}: {e}")
-        
+
         return saved_files
-    
-    async def extract_components(self, 
-                               context: ExtractionContext, 
-                               processed_data: Dict[str, Any]) -> ExtractionResult:
+
+    async def extract_components(self,
+                               context: ExtractionContext,
+                               processed_data: dict[str, Any]) -> ExtractionResult:
         """
         Extract service configuration components from AWD data.
         
@@ -405,53 +410,53 @@ class ServiceConfigExtractor(ComponentExtractor):
         Returns:
             ExtractionResult with generated service configuration files and metadata
         """
-        
+
         files_generated = []
         extraction_errors = []
-        
+
         try:
             # Create services output directory
             services_dir = Path(context.output_directory) / "services"
             services_dir.mkdir(parents=True, exist_ok=True)
-            
+
             # Extract service configurations
             services = self.extract_services(processed_data)
-            
+
             if services:
                 # Generate service configuration files
                 for service in services:
                     # Create individual service files
                     service_name = service.service_name.replace(" ", "_")
-                    
+
                     # Variables file
                     variables_file = services_dir / f"{service_name}_variables.json"
                     with open(variables_file, 'w', encoding='utf-8') as f:
                         json.dump({"variables": service.variables}, f, indent=2, ensure_ascii=False)
                     files_generated.append(str(variables_file))
-                    
+
                     # Inputs file
                     inputs_file = services_dir / f"{service_name}_inputs.json"
                     with open(inputs_file, 'w', encoding='utf-8') as f:
                         json.dump({"inputs": service.inputs}, f, indent=2, ensure_ascii=False)
                     files_generated.append(str(inputs_file))
-                    
+
                     # Outputs file
                     outputs_file = services_dir / f"{service_name}_outputs.json"
                     with open(outputs_file, 'w', encoding='utf-8') as f:
                         json.dump({"outputs": service.outputs}, f, indent=2, ensure_ascii=False)
                     files_generated.append(str(outputs_file))
-                    
+
                     # Process config file
                     config_file = services_dir / f"{service_name}_config.json"
                     with open(config_file, 'w', encoding='utf-8') as f:
                         json.dump(service.process_config, f, indent=2, ensure_ascii=False)
                     files_generated.append(str(config_file))
-                
+
                 logger.info(f"Generated {len(files_generated)} service configuration files")
             else:
                 logger.warning("No service configurations found in processed_data")
                 extraction_errors.append("No service configurations found for extraction")
-            
+
             # Create metadata
             metadata = ComponentMetadata(
                 component_type=self.component_type,
@@ -460,7 +465,7 @@ class ServiceConfigExtractor(ComponentExtractor):
                 file_size_bytes=sum(os.path.getsize(f) for f in files_generated if os.path.exists(f)),
                 validation_status="extracted"
             )
-            
+
             return ExtractionResult(
                 extractor_name=self.extractor_name,
                 component_type=self.component_type,
@@ -470,10 +475,10 @@ class ServiceConfigExtractor(ComponentExtractor):
                 processing_time_ms=0.0,  # Set by monitoring
                 errors=extraction_errors
             )
-            
+
         except Exception as e:
             logger.error(f"Service configuration extraction failed: {e}")
-            
+
             metadata = ComponentMetadata(
                 component_type=self.component_type,
                 source_location=context.source_file,
@@ -481,7 +486,7 @@ class ServiceConfigExtractor(ComponentExtractor):
                 file_size_bytes=0,
                 validation_status="error"
             )
-            
+
             return ExtractionResult(
                 extractor_name=self.extractor_name,
                 component_type=self.component_type,
@@ -493,7 +498,7 @@ class ServiceConfigExtractor(ComponentExtractor):
             )
 
 
-def extract_service_configs(awd_json: Dict[str, Any], output_dir: Optional[Path] = None) -> List[ServiceConfigInfo]:
+def extract_service_configs(awd_json: dict[str, Any], output_dir: Path | None = None) -> list[ServiceConfigInfo]:
     """
     Convenience function to extract service configurations from AWD JSON data.
     
@@ -506,8 +511,8 @@ def extract_service_configs(awd_json: Dict[str, Any], output_dir: Optional[Path]
     """
     extractor = ServiceConfigExtractor()
     services = extractor.extract_services(awd_json)
-    
+
     if output_dir and services:
         extractor.save_service_configs(output_dir)
-    
+
     return services

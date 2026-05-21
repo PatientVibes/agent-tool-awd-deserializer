@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional
 
 
 @dataclass
@@ -26,11 +25,11 @@ class DeserializerConfig:
     safe_reflection: bool = True
 
     # Timeout settings
-    default_timeout: Optional[int] = None
+    default_timeout: int | None = None
 
-    def to_java_opts(self) -> List[str]:
+    def to_java_opts(self) -> list[str]:
         """Convert configuration to Java system properties / heap flags."""
-        opts: List[str] = []
+        opts: list[str] = []
         if self.heap_size:
             opts.append(f"-Xmx{self.heap_size}")
         if self.memory_limit_mb > 0:

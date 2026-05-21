@@ -22,10 +22,9 @@ Performance: Efficient form processing, memory optimization
 import json
 import logging
 import re
-import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any, Tuple
 from pathlib import Path
+from typing import Any
 
 from .awd_data_parser import AWDComponent, ComponentType, parse_awd_json
 
@@ -39,28 +38,28 @@ class FormInfo:
     form_name: str
     form_type: str  # "modern" or "traditional"
     content: str    # JSON or XML content
-    data_sources: List[Dict[str, Any]]
-    validation_errors: List[str]
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    data_sources: list[dict[str, Any]]
+    validation_errors: list[str]
+    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class FormDataExtractor:
     """
     Common utilities for extracting form data from AWD components.
     """
-    
-    def extract_form_fields(self, data: Any) -> List[Dict[str, Any]]:
+
+    def extract_form_fields(self, data: Any) -> list[dict[str, Any]]:
         """Extract form field definitions from AWD data."""
         fields = []
-        
+
         # Look for uxBuilderForm data (found in BPMN XML)
         ux_form_data = self._find_ux_builder_form(data)
         if ux_form_data:
             fields.extend(self._parse_ux_builder_fields(ux_form_data))
-        
+
         return fields
-    
-    def _find_ux_builder_form(self, data: Any) -> Optional[Dict[str, Any]]:
+
+    def _find_ux_builder_form(self, data: Any) -> dict[str, Any] | None:
         """Find uxBuilderForm data in the structure."""
         if isinstance(data, str):
             # Check if this string contains uxBuilderForm JSON
@@ -71,7 +70,7 @@ class FormDataExtractor:
             # Check if this dict contains uxBuilderForm
             if "uxBuilderForm" in data:
                 return data["uxBuilderForm"]
-            
+
             # Look for specific keys like BPMN extractor does
             for key in ['definition', 'content', 'xml', 'data', '_value']:
                 if key in data:
@@ -81,7 +80,7 @@ class FormDataExtractor:
                     result = self._find_ux_builder_form(value)
                     if result:
                         return result
-            
+
             # Recursively search in nested structures
             for value in data.values():
                 result = self._find_ux_builder_form(value)
@@ -92,14 +91,14 @@ class FormDataExtractor:
                 result = self._find_ux_builder_form(item)
                 if result:
                     return result
-        
+
         return None
-    
-    def _extract_ux_form_from_string(self, content: str) -> Optional[Dict[str, Any]]:
+
+    def _extract_ux_form_from_string(self, content: str) -> dict[str, Any] | None:
         """Extract uxBuilderForm JSON from string content using regex pattern."""
         if not content or "uxBuilderForm" not in content:
             return None
-        
+
         try:
             # Use direct field extraction approach that works
             fields = self._extract_fields_from_content(content)
@@ -110,25 +109,25 @@ class FormDataExtractor:
                     "isExternal": False,
                     "values": fields
                 }
-            
+
             return None
-            
+
         except Exception:
             return None
-    
-    def _extract_fields_from_content(self, content: str) -> List[Dict[str, Any]]:
+
+    def _extract_fields_from_content(self, content: str) -> list[dict[str, Any]]:
         """Extract form fields directly from content using regex patterns."""
         fields = []
-        
+
         # Pattern to match field definitions in the uxBuilderForm values array
         # Looking for: {"id":"...","name":"FIELD_NAME","value":...,"elementType":"...","type":{"name":"..."},"isDataDictionary":...}
         field_pattern = r'"name":"([^"]+)"[^}]*?"elementType":"([^"]+)"[^}]*?"type":\{"name":"([^"]+)"\}[^}]*?"isDataDictionary":(\w+)'
-        
+
         matches = re.findall(field_pattern, content, re.DOTALL)
-        
+
         for match in matches:
             name, element_type, data_type, is_data_dict = match
-            
+
             field_info = {
                 "id": f"{name}_1",
                 "name": name,
@@ -140,13 +139,13 @@ class FormDataExtractor:
                 "formId": "_71FEB4E6-119A-4837-9F75-A681EF12DF2A"
             }
             fields.append(field_info)
-        
+
         return fields
-    
-    def _parse_ux_builder_fields(self, ux_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+
+    def _parse_ux_builder_fields(self, ux_data: dict[str, Any]) -> list[dict[str, Any]]:
         """Parse uxBuilderForm field definitions."""
         fields = []
-        
+
         values = ux_data.get("values", [])
         for field_def in values:
             if isinstance(field_def, dict):
@@ -160,7 +159,7 @@ class FormDataExtractor:
                     "order": field_def.get("order", "1"),
                     "formId": field_def.get("formId", "")
                 }
-                
+
                 # Extract table data if available
                 table_data = field_def.get("tableData", {})
                 if table_data:
@@ -170,9 +169,9 @@ class FormDataExtractor:
                         "isInput": table_data.get("isInput", "false") == "true",
                         "isOutput": table_data.get("isOutput", "false") == "true"
                     })
-                
+
                 fields.append(field_info)
-        
+
         return fields
 
 
@@ -180,24 +179,24 @@ class ModernFormExtractor:
     """
     Extracts modern uxData JSON forms from AWD components.
     """
-    
+
     def __init__(self):
         """Initialize the modern form extractor."""
         self.data_extractor = FormDataExtractor()
-        self.extracted_forms: List[FormInfo] = []
-        
-    def extract_forms(self, awd_json: Dict[str, Any]) -> List[FormInfo]:
+        self.extracted_forms: list[FormInfo] = []
+
+    def extract_forms(self, awd_json: dict[str, Any]) -> list[FormInfo]:
         """Extract all modern forms from AWD JSON data."""
         logger.info("Starting modern form extraction")
-        
+
         # Parse AWD components to find form data
         components = parse_awd_json(awd_json)
         form_components = [c for c in components if c.component_type in [ComponentType.MODERN_FORM, ComponentType.BPMN_PROCESS]]
-        
+
         logger.info(f"Found {len(form_components)} potential form components")
-        
+
         self.extracted_forms.clear()
-        
+
         for component in form_components:
             try:
                 # Extract form fields from component
@@ -207,26 +206,26 @@ class ModernFormExtractor:
                     if form_info:
                         self.extracted_forms.append(form_info)
                         logger.debug(f"Extracted modern form: {form_info.form_name}")
-                
+
             except Exception as e:
                 logger.error(f"Error extracting modern form from component {component.name}: {e}")
-        
+
         logger.info(f"Modern form extraction complete. {len(self.extracted_forms)} forms extracted")
         return self.extracted_forms
-    
-    def _create_modern_form(self, component: AWDComponent, fields: List[Dict[str, Any]]) -> Optional[FormInfo]:
+
+    def _create_modern_form(self, component: AWDComponent, fields: list[dict[str, Any]]) -> FormInfo | None:
         """Create a modern uxData JSON form from extracted fields."""
         try:
             # Generate form metadata
             form_id = self._extract_form_id(component, fields)
             form_name = self._extract_form_name(component, fields)
-            
+
             # Create data sources from fields
             data_sources = self._create_data_sources(fields)
-            
+
             # Create the uxData structure
             ux_data = self._create_ux_data_structure(form_name, data_sources, fields)
-            
+
             # Create the complete form JSON structure matching the reference format
             form_json = {
                 "id": form_id,
@@ -248,7 +247,7 @@ class ModernFormExtractor:
                 "authenticated": False,
                 "columns": json.dumps(self._create_columns_definition(fields))
             }
-            
+
             return FormInfo(
                 form_id=form_id,
                 form_name=form_name,
@@ -262,27 +261,27 @@ class ModernFormExtractor:
                     "layout_sections": self._count_layout_sections(ux_data)
                 }
             )
-            
+
         except Exception as e:
             logger.error(f"Error creating modern form: {e}")
             return None
-    
-    def _extract_form_id(self, component: AWDComponent, fields: List[Dict[str, Any]]) -> str:
+
+    def _extract_form_id(self, component: AWDComponent, fields: list[dict[str, Any]]) -> str:
         """Extract or generate form ID."""
         # Try to get from component
         if component.component_id and component.component_id != "unknown_process":
             return component.component_id
-        
+
         # Try to get from fields
         for field in fields:
             form_id = field.get("formId")
             if form_id:
                 return form_id
-        
+
         # Generate a numeric ID based on component name
         return str(hash(component.name) % 1000000000)
-    
-    def _extract_form_name(self, component: AWDComponent, fields: List[Dict[str, Any]]) -> str:
+
+    def _extract_form_name(self, component: AWDComponent, fields: list[dict[str, Any]]) -> str:
         """Extract form name from component or fields."""
         # Use component name if it's meaningful
         if component.name and component.name != "Unknown Process":
@@ -291,14 +290,14 @@ class ModernFormExtractor:
             if name == "Interview":
                 name = "Customer Interview"
             return name
-        
+
         # Default name
         return "CUSTINT"
-    
-    def _create_data_sources(self, fields: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _create_data_sources(self, fields: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Create data sources from form fields."""
         data_sources = []
-        
+
         for field in fields:
             data_source = {
                 "dataName": field.get("name", ""),
@@ -308,10 +307,10 @@ class ModernFormExtractor:
                 "isAutoGenerate": True
             }
             data_sources.append(data_source)
-        
+
         return data_sources
-    
-    def _create_ux_data_structure(self, form_name: str, data_sources: List[Dict[str, Any]], fields: List[Dict[str, Any]]) -> Dict[str, Any]:
+
+    def _create_ux_data_structure(self, form_name: str, data_sources: list[dict[str, Any]], fields: list[dict[str, Any]]) -> dict[str, Any]:
         """Create the uxData structure with theme, styles, and layout."""
         return {
             "uxType": "form",
@@ -324,8 +323,8 @@ class ModernFormExtractor:
             "layoutContents": self._create_layout_contents(fields),
             "defaultLanguage": "en-us"
         }
-    
-    def _create_default_styles(self) -> Dict[str, Any]:
+
+    def _create_default_styles(self) -> dict[str, Any]:
         """Create default styling configuration."""
         return {
             "checkbox": {
@@ -365,11 +364,11 @@ class ModernFormExtractor:
                 "border": {"style": "solid", "color": "#bac5db", "width": 1, "hover": {"style": "solid", "color": "#0077c8", "width": 1}, "focus": {"style": "solid", "color": "#0077c8", "width": 1}}
             }
         }
-    
-    def _create_layout_contents(self, fields: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _create_layout_contents(self, fields: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Create layout contents from form fields."""
         layout_contents = []
-        
+
         # Create a page layout with header
         page_layout = {
             "elementId": "main-page",
@@ -378,7 +377,7 @@ class ModernFormExtractor:
             "layoutDirection": "row",
             "layoutContents": []
         }
-        
+
         # Add header section
         header_section = {
             "elementType": "layout",
@@ -392,41 +391,41 @@ class ModernFormExtractor:
             "layoutDirection": "row",
             "layoutContents": [{
                 "elementType": "text",
-                "textContent": f"<h2><span style=\"color:hsl( 0, 0%, 100% );\">Customer Interview</span></h2>",
+                "textContent": "<h2><span style=\"color:hsl( 0, 0%, 100% );\">Customer Interview</span></h2>",
                 "elementId": "header-text"
             }],
             "elementId": "header-section"
         }
         page_layout["layoutContents"].append(header_section)
-        
+
         # Group fields by type and create sections
         data_dict_fields = [f for f in fields if f.get("isDataDictionary")]
         question_fields = [f for f in fields if f.get("name", "").startswith("Question_")]
         overview_fields = [f for f in fields if f.get("name", "").startswith("Overview_")]
         ci_fields = [f for f in fields if f.get("name", "").startswith("CI")]
-        
+
         # Create form sections for each field group
         if data_dict_fields:
             info_section = self._create_info_section(data_dict_fields)
             page_layout["layoutContents"].append(info_section)
-        
+
         if overview_fields:
             overview_section = self._create_overview_section(overview_fields)
             page_layout["layoutContents"].append(overview_section)
-        
+
         if question_fields and ci_fields:
             questions_section = self._create_questions_section(question_fields, ci_fields)
             page_layout["layoutContents"].append(questions_section)
-        
+
         # Add submit buttons section
         buttons_section = self._create_buttons_section()
         page_layout["layoutContents"].append(buttons_section)
-        
+
         layout_contents.append(page_layout)
-        
+
         return layout_contents
-    
-    def _create_info_section(self, fields: List[Dict[str, Any]]) -> Dict[str, Any]:
+
+    def _create_info_section(self, fields: list[dict[str, Any]]) -> dict[str, Any]:
         """Create information display section."""
         return {
             "elementType": "layout",
@@ -443,11 +442,11 @@ class ModernFormExtractor:
             }],
             "elementId": "info-section"
         }
-    
-    def _create_overview_section(self, fields: List[Dict[str, Any]]) -> Dict[str, Any]:
+
+    def _create_overview_section(self, fields: list[dict[str, Any]]) -> dict[str, Any]:
         """Create overview questions section."""
         contents = []
-        
+
         for field in fields:
             input_element = {
                 "elementType": "input",
@@ -459,7 +458,7 @@ class ModernFormExtractor:
                 "dataSource": field.get('name', '')
             }
             contents.append(input_element)
-        
+
         return {
             "elementType": "layout",
             "layoutType": "section",
@@ -467,22 +466,22 @@ class ModernFormExtractor:
             "layoutContents": contents,
             "elementId": "overview-section"
         }
-    
-    def _create_questions_section(self, question_fields: List[Dict[str, Any]], ci_fields: List[Dict[str, Any]]) -> Dict[str, Any]:
+
+    def _create_questions_section(self, question_fields: list[dict[str, Any]], ci_fields: list[dict[str, Any]]) -> dict[str, Any]:
         """Create questions and scoring section."""
         contents = []
-        
+
         # Pair questions with their corresponding CI scoring fields
         for i, question_field in enumerate(question_fields):
             question_num = str(i + 1).zfill(2)
             ci_field = None
-            
+
             # Find corresponding CI field
             for ci in ci_fields:
                 if ci.get("name", "").endswith(question_num):
                     ci_field = ci
                     break
-            
+
             # Add question text area
             question_element = {
                 "elementType": "input",
@@ -494,7 +493,7 @@ class ModernFormExtractor:
                 "dataSource": question_field.get('name', '')
             }
             contents.append(question_element)
-            
+
             # Add scoring radio buttons if CI field exists
             if ci_field:
                 score_element = {
@@ -508,7 +507,7 @@ class ModernFormExtractor:
                     "dataSource": ci_field.get('name', '')
                 }
                 contents.append(score_element)
-            
+
             # Add divider
             if i < len(question_fields) - 1:
                 divider = {
@@ -517,7 +516,7 @@ class ModernFormExtractor:
                     "elementId": f"divider-{i + 1}"
                 }
                 contents.append(divider)
-        
+
         return {
             "elementType": "layout",
             "layoutType": "section",
@@ -525,8 +524,8 @@ class ModernFormExtractor:
             "layoutContents": contents,
             "elementId": "questions-section"
         }
-    
-    def _create_buttons_section(self) -> Dict[str, Any]:
+
+    def _create_buttons_section(self) -> dict[str, Any]:
         """Create form buttons section."""
         return {
             "elementType": "layout",
@@ -558,11 +557,11 @@ class ModernFormExtractor:
             ],
             "elementId": "buttons-section"
         }
-    
-    def _create_columns_definition(self, fields: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _create_columns_definition(self, fields: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Create columns definition for the form."""
         columns = []
-        
+
         for field in fields:
             column = {
                 "name": field.get("name", ""),
@@ -570,46 +569,46 @@ class ModernFormExtractor:
                 "active": True
             }
             columns.append(column)
-        
+
         return columns
-    
-    def _count_layout_sections(self, ux_data: Dict[str, Any]) -> int:
+
+    def _count_layout_sections(self, ux_data: dict[str, Any]) -> int:
         """Count layout sections in uxData."""
         layout_contents = ux_data.get("layoutContents", [])
         if layout_contents and len(layout_contents) > 0:
             page_layout = layout_contents[0]
             return len(page_layout.get("layoutContents", []))
         return 0
-    
-    def save_forms(self, output_dir: Path, format_filename: bool = True) -> List[Path]:
+
+    def save_forms(self, output_dir: Path, format_filename: bool = True) -> list[Path]:
         """Save extracted modern forms to files."""
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
-        
+
         saved_files = []
-        
+
         for form in self.extracted_forms:
             try:
                 if format_filename:
                     filename = f"{form.form_name.replace(' ', '')}.json"
                 else:
                     filename = f"{form.form_id}.json"
-                
+
                 file_path = output_dir / filename
-                
+
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(form.content)
-                
+
                 saved_files.append(file_path)
                 logger.info(f"Saved modern form to: {file_path}")
-                
+
             except Exception as e:
                 logger.error(f"Error saving modern form {form.form_name}: {e}")
-        
+
         return saved_files
 
 
-def extract_modern_forms(awd_json: Dict[str, Any], output_dir: Optional[Path] = None) -> List[FormInfo]:
+def extract_modern_forms(awd_json: dict[str, Any], output_dir: Path | None = None) -> list[FormInfo]:
     """
     Convenience function to extract modern forms from AWD JSON data.
     
@@ -622,8 +621,8 @@ def extract_modern_forms(awd_json: Dict[str, Any], output_dir: Optional[Path] = 
     """
     extractor = ModernFormExtractor()
     forms = extractor.extract_forms(awd_json)
-    
+
     if output_dir and forms:
         extractor.save_forms(output_dir)
-    
+
     return forms

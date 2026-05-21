@@ -7,17 +7,17 @@ services) wrap this with their own per-type request/result dataclasses.
 
 from __future__ import annotations
 
-import os
-import json
-import time
 import asyncio
-import subprocess
-import shutil
-from pathlib import Path
-from typing import Dict, List, Optional, Any, Tuple
-from dataclasses import dataclass
-from contextlib import asynccontextmanager
+import json
 import logging
+import os
+import shutil
+import subprocess
+import time
+from contextlib import asynccontextmanager
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
 
 from .exceptions import JavaBridgeError
 
@@ -62,8 +62,8 @@ class ExtractionRequest:
     """Configuration for an AWD file extraction request."""
     source_file: str
     output_directory: str
-    extraction_types: List[str]  # bpmn, forms, services, all
-    source_name: Optional[str] = None
+    extraction_types: list[str]  # bpmn, forms, services, all
+    source_name: str | None = None
     dation_format: bool = False
     include_metadata: bool = True
     max_concurrent: int = 4
@@ -77,41 +77,41 @@ class ExtractionResult:
     status: str  # success, error, timeout
     source_name: str
     output_directory: str
-    files_generated: Dict[str, List[str]]
+    files_generated: dict[str, list[str]]
     total_files: int
     processing_time_ms: int
-    errors: List[str]
-    metadata: Dict[str, Any]
+    errors: list[str]
+    metadata: dict[str, Any]
 
 
 @dataclass
 class JavaProcessConfig:
     """Configuration for Java process execution."""
-    heap_size: str = "2g" 
+    heap_size: str = "2g"
     max_memory: str = "3g"
     timeout_seconds: int = 600
-    jar_path: Optional[str] = None
-    java_opts: List[str] = None
-    working_directory: Optional[str] = None
+    jar_path: str | None = None
+    java_opts: list[str] = None
+    working_directory: str | None = None
 
 
 class ProcessManager:
     """Manages Java process lifecycle and monitoring."""
-    
+
     def __init__(self):
-        self.active_processes: Dict[str, subprocess.Popen] = {}
-        
+        self.active_processes: dict[str, subprocess.Popen] = {}
+
     async def run_java_process(
-        self, 
-        command: List[str], 
+        self,
+        command: list[str],
         config: JavaProcessConfig,
         job_id: str
-    ) -> Tuple[str, str, int]:
+    ) -> tuple[str, str, int]:
         """Run Java process with monitoring and timeout control."""
-        
+
         logger.info(f"Starting Java process for job {job_id}")
         logger.debug(f"Command: {command}")
-        
+
         try:
             # Create process with proper configuration
             process = await asyncio.create_subprocess_exec(
@@ -121,23 +121,23 @@ class ProcessManager:
                 cwd=config.working_directory,
                 env=dict(os.environ, **self._get_java_env(config))
             )
-            
+
             self.active_processes[job_id] = process
-            
+
             # Wait for completion with timeout
             try:
                 stdout, stderr = await asyncio.wait_for(
                     process.communicate(),
                     timeout=config.timeout_seconds
                 )
-                
+
                 exit_code = process.returncode
                 stdout_str = stdout.decode('utf-8') if stdout else ""
                 stderr_str = stderr.decode('utf-8') if stderr else ""
-                
+
                 logger.info(f"Java process completed with exit code {exit_code}")
                 return stdout_str, stderr_str, exit_code
-                
+
             except asyncio.TimeoutError as exc:
                 logger.error(f"Java process timed out after {config.timeout_seconds} seconds")
                 process.kill()
@@ -151,23 +151,23 @@ class ProcessManager:
         except Exception as e:
             logger.error(f"Error running Java process: {e}")
             raise JavaBridgeError(f"Failed to execute Java process: {e}") from e
-            
+
         finally:
             self.active_processes.pop(job_id, None)
-    
-    def _get_java_env(self, config: JavaProcessConfig) -> Dict[str, str]:
+
+    def _get_java_env(self, config: JavaProcessConfig) -> dict[str, str]:
         """Get environment variables for Java process."""
         env = {}
-        
+
         if config.java_opts:
             env['JAVA_OPTS'] = ' '.join(config.java_opts)
-            
+
         # Add memory settings
         env['JAVA_HEAP_INITIAL'] = config.heap_size.replace('g', 'G')
         env['JAVA_HEAP_MAX'] = config.max_memory.replace('g', 'G')
-        
+
         return env
-    
+
     def terminate_process(self, job_id: str) -> bool:
         """Terminate a running Java process."""
         process = self.active_processes.get(job_id)
@@ -182,16 +182,16 @@ class ProcessManager:
 
 class ResultProcessor:
     """Process and validate Java extraction results."""
-    
+
     @staticmethod
     def parse_extraction_result(stdout: str, stderr: str, exit_code: int, job_id: str) -> ExtractionResult:
         """Parse Java extraction output into structured result."""
-        
+
         if exit_code != 0:
             error_msg = f"Java process failed with exit code {exit_code}"
             if stderr:
                 error_msg += f": {stderr}"
-            
+
             return ExtractionResult(
                 job_id=job_id,
                 status="error",
@@ -203,15 +203,15 @@ class ResultProcessor:
                 errors=[error_msg],
                 metadata={"exit_code": exit_code, "stderr": stderr}
             )
-        
+
         try:
             # Look for JSON output in stdout
             result_data = ResultProcessor._extract_json_from_output(stdout)
-            
+
             if not result_data:
                 # Fallback: parse text output
                 result_data = ResultProcessor._parse_text_output(stdout)
-            
+
             return ExtractionResult(
                 job_id=job_id,
                 status=result_data.get("status", "success"),
@@ -223,7 +223,7 @@ class ResultProcessor:
                 errors=result_data.get("errors", []),
                 metadata=result_data.get("metadata", {})
             )
-            
+
         except Exception as e:
             logger.error(f"Error parsing extraction result: {e}")
             return ExtractionResult(
@@ -237,12 +237,12 @@ class ResultProcessor:
                 errors=[f"Failed to parse result: {e}"],
                 metadata={"stdout": stdout, "stderr": stderr}
             )
-    
+
     @staticmethod
-    def _extract_json_from_output(output: str) -> Optional[Dict[str, Any]]:
+    def _extract_json_from_output(output: str) -> dict[str, Any] | None:
         """Extract JSON result from Java output."""
         lines = output.split('\n')
-        
+
         for line in lines:
             line = line.strip()
             if line.startswith('{') and line.endswith('}'):
@@ -250,11 +250,11 @@ class ResultProcessor:
                     return json.loads(line)
                 except json.JSONDecodeError:
                     continue
-        
+
         return None
-    
+
     @staticmethod
-    def _parse_text_output(output: str) -> Dict[str, Any]:
+    def _parse_text_output(output: str) -> dict[str, Any]:
         """Parse text-based output from Java (fallback)."""
         result = {
             "status": "success",
@@ -262,11 +262,11 @@ class ResultProcessor:
             "totalFilesGenerated": 0,
             "errors": []
         }
-        
+
         lines = output.split('\n')
         for line in lines:
             line = line.strip()
-            
+
             if "files generated" in line.lower():
                 # Try to extract file count
                 try:
@@ -274,17 +274,17 @@ class ResultProcessor:
                     result["totalFilesGenerated"] = count
                 except ValueError:
                     pass
-            
+
             elif "error" in line.lower() or "exception" in line.lower():
                 result["errors"].append(line)
-        
+
         return result
 
 
 class AwdExtractorBridge:
     """Bridge to the Java engine for AWD file extraction operations."""
 
-    def __init__(self, jar_path: Optional[str] = None):
+    def __init__(self, jar_path: str | None = None):
         self.process_manager = ProcessManager()
         self.jar_path = jar_path or self._find_jar_path()
 
@@ -321,7 +321,7 @@ class AwdExtractorBridge:
         except Exception as e:
             logger.error(f"AWD extraction failed: {e}")
             raise JavaBridgeError(f"AWD extraction failed: {e}") from e
-    
+
     async def extract_bpmn_files(self, source_file: str, output_dir: str, **kwargs) -> ExtractionResult:
         """Extract only BPMN files."""
         request = ExtractionRequest(
@@ -331,7 +331,7 @@ class AwdExtractorBridge:
             **kwargs
         )
         return await self.extract_files(request)
-    
+
     async def extract_form_files(self, source_file: str, output_dir: str, dation_format: bool = False, **kwargs) -> ExtractionResult:
         """Extract only form files."""
         request = ExtractionRequest(
@@ -342,7 +342,7 @@ class AwdExtractorBridge:
             **kwargs
         )
         return await self.extract_files(request)
-    
+
     async def extract_service_files(self, source_file: str, output_dir: str, **kwargs) -> ExtractionResult:
         """Extract only service configuration files."""
         request = ExtractionRequest(
@@ -352,31 +352,31 @@ class AwdExtractorBridge:
             **kwargs
         )
         return await self.extract_files(request)
-    
+
     def _validate_request(self, request: ExtractionRequest) -> None:
         """Validate extraction request parameters."""
         if not os.path.exists(request.source_file):
             raise JavaBridgeError(f"Source file not found: {request.source_file}")
-        
+
         if not request.source_file.lower().endswith(('.design', '.service')):
             raise JavaBridgeError(
                 f"Invalid file format. Expected .design or .service file: {request.source_file}"
             )
-        
+
         # Create output directory if it doesn't exist
         os.makedirs(request.output_directory, exist_ok=True)
-        
+
         if not request.extraction_types:
             raise JavaBridgeError("At least one extraction type must be specified")
-        
+
         valid_types = {"bpmn", "forms", "services", "all"}
         for extraction_type in request.extraction_types:
             if extraction_type not in valid_types:
                 raise JavaBridgeError(f"Invalid extraction type: {extraction_type}")
-    
-    def _build_extraction_command(self, request: ExtractionRequest) -> List[str]:
+
+    def _build_extraction_command(self, request: ExtractionRequest) -> list[str]:
         """Build Java command for AWD extraction."""
-        
+
         command = [
             "java",
             "-Xms1g",
@@ -387,23 +387,23 @@ class AwdExtractorBridge:
             "--output", request.output_directory,
             "--types", ",".join(request.extraction_types)
         ]
-        
+
         if request.source_name:
             command.extend(["--source-name", request.source_name])
-        
+
         if request.dation_format:
             command.append("--dation-format")
-        
+
         if not request.include_metadata:
             command.append("--no-metadata")
-        
+
         command.extend(["--max-concurrent", str(request.max_concurrent)])
-        
+
         return command
-    
+
     def _find_jar_path(self) -> str:
         """Find the AWD deserializer JAR file."""
-        
+
         # Check common locations
         possible_paths = [
             "target/awd-deserializer-engine-0.1.0.jar",
@@ -411,11 +411,11 @@ class AwdExtractorBridge:
             "/app/awd-deserializer-engine.jar",
             os.path.expanduser("~/awd-deserializer-engine.jar")
         ]
-        
+
         for path in possible_paths:
             if os.path.exists(path):
                 return os.path.abspath(path)
-        
+
         raise JavaBridgeError(
             "AWD deserializer JAR file not found. "
             "Please build the project or specify jar_path"
@@ -424,13 +424,13 @@ class AwdExtractorBridge:
 
 class JavaBridge:
     """Main Java-Python integration bridge."""
-    
+
     def __init__(self):
         self.awd_extractor = AwdExtractorBridge()
-        
-    async def health_check(self) -> Dict[str, Any]:
+
+    async def health_check(self) -> dict[str, Any]:
         """Check if Java components are available and working."""
-        
+
         try:
             # Try to run a simple Java command
             process = await asyncio.create_subprocess_exec(
@@ -438,11 +438,11 @@ class JavaBridge:
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE
             )
-            
+
             stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=10)
-            
+
             java_version = stderr.decode('utf-8') if stderr else stdout.decode('utf-8')
-            
+
             return {
                 "status": "healthy",
                 "java_available": True,
@@ -450,27 +450,27 @@ class JavaBridge:
                 "jar_path": self.awd_extractor.jar_path,
                 "jar_exists": os.path.exists(self.awd_extractor.jar_path)
             }
-            
+
         except Exception as e:
             return {
                 "status": "unhealthy",
                 "java_available": False,
                 "error": str(e)
             }
-    
+
     @asynccontextmanager
     async def managed_extraction(self, request: ExtractionRequest):
         """Context manager for safe extraction with cleanup."""
         temp_dirs = []
-        
+
         try:
             # Create temporary directories if needed
             if not os.path.exists(request.output_directory):
                 temp_dirs.append(request.output_directory)
                 os.makedirs(request.output_directory, exist_ok=True)
-            
+
             yield self.awd_extractor
-            
+
         finally:
             # Cleanup temporary directories if extraction failed
             for temp_dir in temp_dirs:

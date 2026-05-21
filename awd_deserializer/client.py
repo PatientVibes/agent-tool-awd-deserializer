@@ -14,13 +14,15 @@ import shutil
 import subprocess
 import tempfile
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 from .config import DeserializerConfig
 from .exceptions import (
     DeserializationError,
-    FileNotFoundError as AwdFileNotFoundError,
     JavaBridgeError,
+)
+from .exceptions import (
+    FileNotFoundError as AwdFileNotFoundError,
 )
 from .java_bridge import DEFAULT_JAR
 
@@ -41,9 +43,9 @@ class AwdDeserializer:
 
     def __init__(
         self,
-        config: Optional[DeserializerConfig] = None,
+        config: DeserializerConfig | None = None,
         debug: bool = False,
-        jar_path: Optional[Path] = None,
+        jar_path: Path | None = None,
     ) -> None:
         """Initialize the deserializer.
 
@@ -88,7 +90,7 @@ class AwdDeserializer:
             )
         return str(resolved)
 
-    def _validate_file_size(self, file_path: str, max_size: Optional[int] = None) -> None:
+    def _validate_file_size(self, file_path: str, max_size: int | None = None) -> None:
         """Validate file size to prevent DoS via oversize inputs."""
         if max_size is None:
             max_size = self.MAX_FILE_SIZE
@@ -108,9 +110,9 @@ class AwdDeserializer:
     def deserialize(
         self,
         design_file_path: str,
-        output_json_path: Optional[str] = None,
-        timeout: Optional[int] = None,
-        max_file_size: Optional[int] = None,
+        output_json_path: str | None = None,
+        timeout: int | None = None,
+        max_file_size: int | None = None,
     ) -> str:
         """Deserialize an AWD design/service file to JSON.
 
@@ -209,16 +211,16 @@ class AwdDeserializer:
     def deserialize_to_dict(
         self,
         design_file_path: str,
-        timeout: Optional[int] = None,
+        timeout: int | None = None,
         cleanup: bool = True,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Deserialize a file and return the parsed JSON as a dict."""
         temp_dir = tempfile.mkdtemp(prefix="awd_")
         try:
             filename = Path(design_file_path).stem + ".json"
             output_path = os.path.join(temp_dir, filename)
             self.deserialize(design_file_path, output_path, timeout)
-            with open(output_path, "r", encoding="utf-8") as fh:
+            with open(output_path, encoding="utf-8") as fh:
                 return json.load(fh)
         except json.JSONDecodeError:
             logger.error("Failed to parse JSON output")

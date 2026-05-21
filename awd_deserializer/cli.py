@@ -19,7 +19,6 @@ import json
 import logging
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 from . import __version__
 from .client import AwdDeserializer
@@ -156,7 +155,7 @@ def handle_deserialize(args: argparse.Namespace) -> int:
         return 1
 
     if args.pretty and args.output is None:
-        with open(output_path, "r", encoding="utf-8") as fh:
+        with open(output_path, encoding="utf-8") as fh:
             data = json.load(fh)
         sys.stdout.write(json.dumps(data, indent=2) + "\n")
     else:
@@ -261,7 +260,7 @@ async def _handle_extract(args: argparse.Namespace, kind: str) -> int:
     return 1
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     """CLI entry point."""
     parser = create_parser()
     args = parser.parse_args(argv)

@@ -21,8 +21,8 @@ Performance: Efficient XML processing, memory optimization
 import logging
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any, Tuple
 from pathlib import Path
+from typing import Any
 
 from .awd_data_parser import AWDComponent, ComponentType, parse_awd_json
 from .form_extractor import FormDataExtractor, FormInfo
@@ -37,8 +37,8 @@ class ScreenControl:
     control_id: str
     name: str
     label: str
-    position: Tuple[int, int, int, int]  # top, left, width, height
-    properties: Dict[str, Any] = field(default_factory=dict)
+    position: tuple[int, int, int, int]  # top, left, width, height
+    properties: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -46,32 +46,32 @@ class ScreenGroup:
     """Represents a group of controls in a userScreen form."""
     group_id: str
     label: str
-    position: Tuple[int, int, int, int]  # top, left, width, height
-    controls: List[ScreenControl] = field(default_factory=list)
+    position: tuple[int, int, int, int]  # top, left, width, height
+    controls: list[ScreenControl] = field(default_factory=list)
 
 
 class TraditionalFormExtractor:
     """
     Extracts traditional userScreen XML forms from AWD components.
     """
-    
+
     def __init__(self):
         """Initialize the traditional form extractor."""
         self.data_extractor = FormDataExtractor()
-        self.extracted_forms: List[FormInfo] = []
-        
-    def extract_forms(self, awd_json: Dict[str, Any]) -> List[FormInfo]:
+        self.extracted_forms: list[FormInfo] = []
+
+    def extract_forms(self, awd_json: dict[str, Any]) -> list[FormInfo]:
         """Extract all traditional forms from AWD JSON data."""
         logger.info("Starting traditional form extraction")
-        
+
         # Parse AWD components to find form data
         components = parse_awd_json(awd_json)
         form_components = [c for c in components if c.component_type in [ComponentType.TRADITIONAL_FORM, ComponentType.BPMN_PROCESS]]
-        
+
         logger.info(f"Found {len(form_components)} potential traditional form components")
-        
+
         self.extracted_forms.clear()
-        
+
         for component in form_components:
             try:
                 # Extract form fields from component
@@ -81,24 +81,24 @@ class TraditionalFormExtractor:
                     if form_info:
                         self.extracted_forms.append(form_info)
                         logger.debug(f"Extracted traditional form: {form_info.form_name}")
-                
+
             except Exception as e:
                 logger.error(f"Error extracting traditional form from component {component.name}: {e}")
-        
+
         logger.info(f"Traditional form extraction complete. {len(self.extracted_forms)} forms extracted")
         return self.extracted_forms
-    
-    def _create_traditional_form(self, component: AWDComponent, fields: List[Dict[str, Any]]) -> Optional[FormInfo]:
+
+    def _create_traditional_form(self, component: AWDComponent, fields: list[dict[str, Any]]) -> FormInfo | None:
         """Create a traditional userScreen XML form from extracted fields."""
         try:
             # Generate form metadata
             form_id = self._extract_form_id(component, fields)
             form_name = self._extract_form_name(component, fields)
             screen_name = form_name.upper().replace(" ", "")
-            
+
             # Create the userScreen XML structure
             userscreen_xml = self._create_userscreen_xml(screen_name, form_name, fields)
-            
+
             return FormInfo(
                 form_id=form_id,
                 form_name=form_name,
@@ -113,16 +113,16 @@ class TraditionalFormExtractor:
                     "control_types": self._get_control_types(fields)
                 }
             )
-            
+
         except Exception as e:
             logger.error(f"Error creating traditional form: {e}")
             return None
-    
-    def _create_userscreen_xml(self, screen_name: str, form_name: str, fields: List[Dict[str, Any]]) -> str:
+
+    def _create_userscreen_xml(self, screen_name: str, form_name: str, fields: list[dict[str, Any]]) -> str:
         """Create the complete userScreen XML structure."""
         # Create root userScreen element
         userscreen = ET.Element("userScreen")
-        
+
         # Add screen metadata
         ET.SubElement(userscreen, "screenName").text = screen_name
         ET.SubElement(userscreen, "screenType").text = "W"
@@ -131,17 +131,17 @@ class TraditionalFormExtractor:
         ET.SubElement(userscreen, "langID").text = "en-us"
         ET.SubElement(userscreen, "screenFormat").text = "U"
         ET.SubElement(userscreen, "screenDesc").text = form_name
-        
+
         # Create screenData section
         screen_data = ET.SubElement(userscreen, "screenData")
         ET.SubElement(screen_data, "screenDesc").text = form_name
         ET.SubElement(screen_data, "screenFormat").text = "U"
         ET.SubElement(screen_data, "version").text = "0"
-        
+
         # Create screenDefinition
         screen_def = ET.SubElement(screen_data, "screenDefinition")
         screen_def.set("definitionVersion", "2")
-        
+
         ET.SubElement(screen_def, "title").text = form_name
         ET.SubElement(screen_def, "newForm").text = "awdForm"
         ET.SubElement(screen_def, "class")
@@ -150,57 +150,57 @@ class TraditionalFormExtractor:
         ET.SubElement(screen_def, "linkList")
         ET.SubElement(screen_def, "customRules")
         ET.SubElement(screen_def, "customProperties")
-        
+
         # Create page
         page = ET.SubElement(screen_def, "page")
         page.set("index", "0")
-        
+
         ET.SubElement(page, "title").text = form_name
         ET.SubElement(page, "width").text = "1200"
         ET.SubElement(page, "height").text = "1200"
         ET.SubElement(page, "transformVariables")
-        
+
         # Create groups and controls based on fields
         self._create_form_groups(page, fields)
-        
+
         # Add navigation buttons
         self._add_navigation_buttons(page)
-        
+
         # Add publicLink
         ET.SubElement(userscreen, "publicLink").text = "N"
-        
+
         # Convert to string with proper formatting
         self._indent_xml(userscreen)
         return ET.tostring(userscreen, encoding='unicode')
-    
-    def _create_form_groups(self, page: ET.Element, fields: List[Dict[str, Any]]):
+
+    def _create_form_groups(self, page: ET.Element, fields: list[dict[str, Any]]):
         """Create form groups and controls based on field data."""
         if not fields:
             return
-        
+
         # Group fields by category
         data_dict_fields = [f for f in fields if f.get("isDataDictionary")]
         question_fields = [f for f in fields if f.get("name", "").startswith("Question_")]
         ci_fields = [f for f in fields if f.get("name", "").startswith("CI")]
         overview_fields = [f for f in fields if f.get("name", "").startswith("Overview_")]
-        
+
         current_top = 35
-        
+
         # Create Information group if we have data dictionary fields
         if data_dict_fields:
             info_group = self._create_info_group(page, data_dict_fields, current_top)
             current_top += 200
-        
+
         # Create Customer Interview group if we have question and CI fields
         if question_fields and ci_fields:
             ci_group = self._create_customer_interview_group(page, question_fields, ci_fields, current_top)
             current_top += 600
-        
+
         # Create Overview group if we have overview fields
         if overview_fields:
             overview_group = self._create_overview_group(page, overview_fields, current_top)
-    
-    def _create_info_group(self, page: ET.Element, fields: List[Dict[str, Any]], top: int) -> ET.Element:
+
+    def _create_info_group(self, page: ET.Element, fields: list[dict[str, Any]], top: int) -> ET.Element:
         """Create information group with data dictionary fields."""
         group = ET.SubElement(page, "group")
         ET.SubElement(group, "label").text = "---FORM INFORMATION---"
@@ -209,13 +209,13 @@ class TraditionalFormExtractor:
         ET.SubElement(group, "left").text = "16"
         ET.SubElement(group, "width").text = "600"
         ET.SubElement(group, "height").text = "150"
-        
+
         # Add data dictionary fields as text inputs
         field_top = 30
         for i, field in enumerate(fields[:5]):  # Limit to 5 fields
             dd_field = ET.SubElement(group, "dataDictionary")
             dd_field.set("fieldType", "textInput")
-            
+
             field_id = f"{field.get('name', f'field_{i}')}_1"
             ET.SubElement(dd_field, "id").text = field_id
             ET.SubElement(dd_field, "name").text = field.get('name', f'field_{i}')
@@ -240,14 +240,14 @@ class TraditionalFormExtractor:
             ET.SubElement(dd_field, "top").text = str(field_top)
             ET.SubElement(dd_field, "left").text = str(20 + (i % 2) * 280)
             ET.SubElement(dd_field, "width").text = "250"
-            
+
             if i % 2 == 1:
                 field_top += 40
-        
+
         return group
-    
-    def _create_customer_interview_group(self, page: ET.Element, question_fields: List[Dict[str, Any]], 
-                                       ci_fields: List[Dict[str, Any]], top: int) -> ET.Element:
+
+    def _create_customer_interview_group(self, page: ET.Element, question_fields: list[dict[str, Any]],
+                                       ci_fields: list[dict[str, Any]], top: int) -> ET.Element:
         """Create customer interview group with questions and scoring."""
         group = ET.SubElement(page, "group")
         ET.SubElement(group, "label").text = "---CUSTOMER INTERVIEW---"
@@ -256,7 +256,7 @@ class TraditionalFormExtractor:
         ET.SubElement(group, "left").text = "16"
         ET.SubElement(group, "width").text = "1158"
         ET.SubElement(group, "height").text = "550"
-        
+
         # Create subgroups for questions and scores
         questions_group = ET.SubElement(group, "group")
         ET.SubElement(questions_group, "label").text = "Questions"
@@ -265,7 +265,7 @@ class TraditionalFormExtractor:
         ET.SubElement(questions_group, "left").text = "10"
         ET.SubElement(questions_group, "width").text = "700"
         ET.SubElement(questions_group, "height").text = "500"
-        
+
         scores_group = ET.SubElement(group, "group")
         ET.SubElement(scores_group, "label").text = "Scores"
         ET.SubElement(scores_group, "class")
@@ -273,14 +273,14 @@ class TraditionalFormExtractor:
         ET.SubElement(scores_group, "left").text = "720"
         ET.SubElement(scores_group, "width").text = "400"
         ET.SubElement(scores_group, "height").text = "500"
-        
+
         # Add question text areas and scoring fields
         question_top = 30
         for i, (question_field, ci_field) in enumerate(zip(question_fields, ci_fields)):
             # Question text area (in questions group)
             dd_field = ET.SubElement(questions_group, "dataDictionary")
             dd_field.set("fieldType", "textInput")
-            
+
             q_field_id = f"{question_field.get('name', f'question_{i}')}_1"
             ET.SubElement(dd_field, "id").text = q_field_id
             ET.SubElement(dd_field, "name").text = question_field.get('name', f'question_{i}')
@@ -305,11 +305,11 @@ class TraditionalFormExtractor:
             ET.SubElement(dd_field, "top").text = str(question_top)
             ET.SubElement(dd_field, "left").text = "20"
             ET.SubElement(dd_field, "width").text = "650"
-            
+
             # Score field (in scores group)
             score_field = ET.SubElement(scores_group, "dataDictionary")
             score_field.set("fieldType", "textInput")
-            
+
             s_field_id = f"{ci_field.get('name', f'ci_{i}')}_1"
             ET.SubElement(score_field, "id").text = s_field_id
             ET.SubElement(score_field, "name").text = ci_field.get('name', f'ci_{i}')
@@ -334,12 +334,12 @@ class TraditionalFormExtractor:
             ET.SubElement(score_field, "top").text = str(question_top)
             ET.SubElement(score_field, "left").text = "20"
             ET.SubElement(score_field, "width").text = "100"
-            
+
             question_top += 60
-        
+
         return group
-    
-    def _create_overview_group(self, page: ET.Element, fields: List[Dict[str, Any]], top: int) -> ET.Element:
+
+    def _create_overview_group(self, page: ET.Element, fields: list[dict[str, Any]], top: int) -> ET.Element:
         """Create overview group with overview fields."""
         group = ET.SubElement(page, "group")
         ET.SubElement(group, "label").text = "---OVERVIEW INFORMATION---"
@@ -348,13 +348,13 @@ class TraditionalFormExtractor:
         ET.SubElement(group, "left").text = "16"
         ET.SubElement(group, "width").text = "1158"
         ET.SubElement(group, "height").text = "200"
-        
+
         # Add overview fields
         field_top = 30
         for i, field in enumerate(fields):
             dd_field = ET.SubElement(group, "dataDictionary")
             dd_field.set("fieldType", "textInput")
-            
+
             field_id = f"{field.get('name', f'overview_{i}')}_1"
             ET.SubElement(dd_field, "id").text = field_id
             ET.SubElement(dd_field, "name").text = field.get('name', f'overview_{i}')
@@ -379,11 +379,11 @@ class TraditionalFormExtractor:
             ET.SubElement(dd_field, "top").text = str(field_top)
             ET.SubElement(dd_field, "left").text = "20"
             ET.SubElement(dd_field, "width").text = "1100"
-            
+
             field_top += 50
-        
+
         return group
-    
+
     def _add_navigation_buttons(self, page: ET.Element):
         """Add navigation buttons to the form."""
         # Back button
@@ -400,7 +400,7 @@ class TraditionalFormExtractor:
         ET.SubElement(back_button, "left").text = "428"
         ET.SubElement(back_button, "width").text = "111"
         ET.SubElement(back_button, "height").text = "52"
-        
+
         # Next/Submit button
         next_button = ET.SubElement(page, "routingButton")
         ET.SubElement(next_button, "id").text = "Submit_1"
@@ -415,7 +415,7 @@ class TraditionalFormExtractor:
         ET.SubElement(next_button, "left").text = "696"
         ET.SubElement(next_button, "width").text = "111"
         ET.SubElement(next_button, "height").text = "52"
-        
+
         # Form name static text
         form_name = ET.SubElement(page, "staticText")
         ET.SubElement(form_name, "id").text = "FormName_1"
@@ -430,7 +430,7 @@ class TraditionalFormExtractor:
         ET.SubElement(form_name, "left").text = "0"
         ET.SubElement(form_name, "width").text = "156"
         ET.SubElement(form_name, "height").text = "15"
-    
+
     def _indent_xml(self, elem: ET.Element, level: int = 0):
         """Add indentation to XML for readable output."""
         indent = "\n" + level * "  "
@@ -446,23 +446,23 @@ class TraditionalFormExtractor:
         else:
             if level and (not elem.tail or not elem.tail.strip()):
                 elem.tail = indent
-    
-    def _extract_form_id(self, component: AWDComponent, fields: List[Dict[str, Any]]) -> str:
+
+    def _extract_form_id(self, component: AWDComponent, fields: list[dict[str, Any]]) -> str:
         """Extract or generate form ID."""
         # Try to get from component
         if component.component_id and component.component_id != "unknown_process":
             return component.component_id
-        
+
         # Try to get from fields
         for field in fields:
             form_id = field.get("formId")
             if form_id:
                 return form_id
-        
+
         # Generate a numeric ID based on component name
         return str(hash(component.name) % 1000000000)
-    
-    def _extract_form_name(self, component: AWDComponent, fields: List[Dict[str, Any]]) -> str:
+
+    def _extract_form_name(self, component: AWDComponent, fields: list[dict[str, Any]]) -> str:
         """Extract form name from component or fields."""
         # Use component name if it's meaningful
         if component.name and component.name != "Unknown Process":
@@ -471,14 +471,14 @@ class TraditionalFormExtractor:
             if name == "Interview":
                 name = "Customer Interview"
             return name
-        
+
         # Default name
         return "CUSTINT"
-    
-    def _create_data_sources(self, fields: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+
+    def _create_data_sources(self, fields: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Create data sources from form fields."""
         data_sources = []
-        
+
         for field in fields:
             data_source = {
                 "dataName": field.get("name", ""),
@@ -488,53 +488,51 @@ class TraditionalFormExtractor:
                 "isAutoGenerate": True
             }
             data_sources.append(data_source)
-        
+
         return data_sources
-    
-    def _get_control_types(self, fields: List[Dict[str, Any]]) -> List[str]:
+
+    def _get_control_types(self, fields: list[dict[str, Any]]) -> list[str]:
         """Get unique control types from fields."""
         control_types = set()
-        
+
         for field in fields:
             element_type = field.get("elementType", "textInput")
-            if element_type == "radio-button-group":
-                control_types.add("dataDictionary")
-            elif element_type == "text-area":
+            if element_type == "radio-button-group" or element_type == "text-area":
                 control_types.add("dataDictionary")
             else:
                 control_types.add("dataDictionary")
-        
+
         return list(control_types)
-    
-    def save_forms(self, output_dir: Path, format_filename: bool = True) -> List[Path]:
+
+    def save_forms(self, output_dir: Path, format_filename: bool = True) -> list[Path]:
         """Save extracted traditional forms to files."""
         output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
-        
+
         saved_files = []
-        
+
         for form in self.extracted_forms:
             try:
                 if format_filename:
                     filename = f"{form.form_name.replace(' ', '').upper()}.xml"
                 else:
                     filename = f"{form.form_id}.xml"
-                
+
                 file_path = output_dir / filename
-                
+
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(form.content)
-                
+
                 saved_files.append(file_path)
                 logger.info(f"Saved traditional form to: {file_path}")
-                
+
             except Exception as e:
                 logger.error(f"Error saving traditional form {form.form_name}: {e}")
-        
+
         return saved_files
 
 
-def extract_traditional_forms(awd_json: Dict[str, Any], output_dir: Optional[Path] = None) -> List[FormInfo]:
+def extract_traditional_forms(awd_json: dict[str, Any], output_dir: Path | None = None) -> list[FormInfo]:
     """
     Convenience function to extract traditional forms from AWD JSON data.
     
@@ -547,8 +545,8 @@ def extract_traditional_forms(awd_json: Dict[str, Any], output_dir: Optional[Pat
     """
     extractor = TraditionalFormExtractor()
     forms = extractor.extract_forms(awd_json)
-    
+
     if output_dir and forms:
         extractor.save_forms(output_dir)
-    
+
     return forms
