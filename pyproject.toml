@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-tool-awd-deserializer"
+version = "0.1.0"
+description = "Deserialize AWD .design / .service files into structured JSON. JAR-free."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Chris Moore" },
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4.0",
+    "mypy>=1.0",
+]
+
+[project.scripts]
+awd-deserialize = "awd_deserializer.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/PatientVibes/agent-tool-awd-deserializer"
+Repository = "https://github.com/PatientVibes/agent-tool-awd-deserializer.git"
+Issues = "https://github.com/PatientVibes/agent-tool-awd-deserializer/issues"
+
+[tool.setuptools.packages.find]
+include = ["awd_deserializer*"]
+exclude = ["tests*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-v", "--tb=short", "--strict-markers"]
+markers = [
+    "unit: fast tests, no external deps",
+    "integration: requires built Java JAR",
+]
