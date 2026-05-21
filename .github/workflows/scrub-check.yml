@@ -1,0 +1,25 @@
+name: scrub-check
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  grep-denylist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail if dropped identifiers reappear
+        run: |
+          # Customer-specific business identifiers + decompiled-SS&C constants.
+          # The AWD wire-format namespace `http://www.dstawd.com` is intentionally
+          # NOT in this denylist — it's a public-on-the-wire URI that legitimate
+          # consumers of .design files must match at runtime.
+          PATTERNS='POLYISSUE|ISSUREVIEW|NBMISSRQ|NEWBUSINES|26BC4319-3E20-42DD-B63A-A43F1AF290F2|2150064868425960579|com\.dstawd\.deserializer'
+          # Exclude this workflow file itself — it lists the patterns by design.
+          if grep -rnE "$PATTERNS" --exclude-dir=.git --exclude-dir=target --exclude-dir=node_modules --exclude=scrub-check.yml .; then
+            echo "::error::Dropped customer identifier or decompiled-SS&C signature reappeared. See the pre-flight audit from the extraction."
+            exit 1
+          fi
+          echo "scrub-check clean"
