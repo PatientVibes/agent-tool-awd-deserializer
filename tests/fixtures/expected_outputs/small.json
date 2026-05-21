@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "created": "2026-05-21T22:38:08.412180+00:00",
+    "file_type": "design",
+    "object_count": 1,
+    "version": "1.0.0"
+  },
+  "objects": [
+    {
+      "created": "2026-05-21T22:38:08.412180+00:00",
+      "id": "simple_0",
+      "name": "Simple Design 0",
+      "type": "SimpleDesign",
+      "version": "1.0"
+    }
+  ]
+}

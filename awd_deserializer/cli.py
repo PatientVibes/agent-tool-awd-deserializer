@@ -24,7 +24,7 @@ from typing import List, Optional
 from . import __version__
 from .client import AwdDeserializer
 from .config import DeserializerConfig
-from .exceptions import DeserializationError, JavaBridgeError
+from .exceptions import AwdDeserializerError, JavaBridgeError
 from .java_bridge import (
     extract_all_files,
     extract_bpmn_files,
@@ -151,7 +151,7 @@ def handle_deserialize(args: argparse.Namespace) -> int:
     try:
         deserializer = AwdDeserializer(config=config, debug=args.debug)
         output_path = deserializer.deserialize(args.input, args.output, args.timeout)
-    except (DeserializationError, JavaBridgeError) as exc:
+    except AwdDeserializerError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 

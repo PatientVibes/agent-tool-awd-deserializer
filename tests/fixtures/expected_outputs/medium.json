@@ -1,0 +1,3160 @@
+{
+  "metadata": {
+    "created": "2026-05-21T22:38:08.413179+00:00",
+    "file_type": "design",
+    "object_count": 50,
+    "version": "1.0.0"
+  },
+  "objects": [
+    {
+      "components": [
+        {
+          "id": "comp_0_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_0_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_0_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_0_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_0_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_0",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 0
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_0"
+        ]
+      },
+      "name": "Complex Design 0",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_1_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_1_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_1_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_1_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_1_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_1",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 1
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_1"
+        ]
+      },
+      "name": "Complex Design 1",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_2_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_2_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_2_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_2_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_2_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_2",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 2
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_2"
+        ]
+      },
+      "name": "Complex Design 2",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_3_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_3_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_3_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_3_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_3_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_3",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 3
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_3"
+        ]
+      },
+      "name": "Complex Design 3",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_4_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_4_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_4_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_4_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_4_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_4",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 4
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_4"
+        ]
+      },
+      "name": "Complex Design 4",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_5_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_5_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_5_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_5_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_5_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_5",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 5
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_5"
+        ]
+      },
+      "name": "Complex Design 5",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_6_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_6_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_6_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_6_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_6_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_6",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 6
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_6"
+        ]
+      },
+      "name": "Complex Design 6",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_7_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_7_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_7_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_7_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_7_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_7",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 7
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_7"
+        ]
+      },
+      "name": "Complex Design 7",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_8_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_8_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_8_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_8_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_8_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_8",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 8
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_8"
+        ]
+      },
+      "name": "Complex Design 8",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_9_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_9_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_9_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_9_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_9_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_9",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 9
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_9"
+        ]
+      },
+      "name": "Complex Design 9",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_10_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_10_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_10_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_10_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_10_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_10",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 10
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_10"
+        ]
+      },
+      "name": "Complex Design 10",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_11_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_11_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_11_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_11_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_11_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_11",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 11
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_11"
+        ]
+      },
+      "name": "Complex Design 11",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_12_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_12_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_12_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_12_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_12_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_12",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 12
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_12"
+        ]
+      },
+      "name": "Complex Design 12",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_13_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_13_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_13_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_13_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_13_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_13",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 13
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_13"
+        ]
+      },
+      "name": "Complex Design 13",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_14_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_14_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_14_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_14_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_14_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_14",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 14
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_14"
+        ]
+      },
+      "name": "Complex Design 14",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_15_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_15_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_15_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_15_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_15_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_15",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 15
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_15"
+        ]
+      },
+      "name": "Complex Design 15",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_16_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_16_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_16_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_16_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_16_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_16",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 16
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_16"
+        ]
+      },
+      "name": "Complex Design 16",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_17_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_17_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_17_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_17_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_17_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_17",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 17
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_17"
+        ]
+      },
+      "name": "Complex Design 17",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_18_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_18_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_18_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_18_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_18_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_18",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 18
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_18"
+        ]
+      },
+      "name": "Complex Design 18",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_19_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_19_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_19_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_19_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_19_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_19",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 19
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_19"
+        ]
+      },
+      "name": "Complex Design 19",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_20_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_20_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_20_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_20_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_20_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_20",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 20
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_20"
+        ]
+      },
+      "name": "Complex Design 20",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_21_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_21_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_21_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_21_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_21_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_21",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 21
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_21"
+        ]
+      },
+      "name": "Complex Design 21",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_22_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_22_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_22_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_22_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_22_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_22",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 22
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_22"
+        ]
+      },
+      "name": "Complex Design 22",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_23_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_23_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_23_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_23_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_23_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_23",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 23
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_23"
+        ]
+      },
+      "name": "Complex Design 23",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_24_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_24_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_24_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_24_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_24_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_24",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 24
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_24"
+        ]
+      },
+      "name": "Complex Design 24",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_25_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_25_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_25_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_25_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_25_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_25",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 25
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_25"
+        ]
+      },
+      "name": "Complex Design 25",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_26_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_26_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_26_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_26_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_26_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_26",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 26
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_26"
+        ]
+      },
+      "name": "Complex Design 26",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_27_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_27_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_27_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_27_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_27_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_27",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 27
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_27"
+        ]
+      },
+      "name": "Complex Design 27",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_28_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_28_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_28_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_28_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_28_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_28",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 28
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_28"
+        ]
+      },
+      "name": "Complex Design 28",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_29_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_29_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_29_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_29_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_29_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_29",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 29
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_29"
+        ]
+      },
+      "name": "Complex Design 29",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_30_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_30_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_30_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_30_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_30_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_30",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 30
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_30"
+        ]
+      },
+      "name": "Complex Design 30",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_31_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_31_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_31_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_31_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_31_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_31",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 31
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_31"
+        ]
+      },
+      "name": "Complex Design 31",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_32_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_32_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_32_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_32_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_32_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_32",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 32
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_32"
+        ]
+      },
+      "name": "Complex Design 32",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_33_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_33_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_33_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_33_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_33_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_33",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 33
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_33"
+        ]
+      },
+      "name": "Complex Design 33",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_34_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_34_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_34_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_34_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_34_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_34",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 34
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_34"
+        ]
+      },
+      "name": "Complex Design 34",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_35_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_35_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_35_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_35_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_35_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_35",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 35
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_35"
+        ]
+      },
+      "name": "Complex Design 35",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_36_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_36_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_36_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_36_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_36_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_36",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 36
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_36"
+        ]
+      },
+      "name": "Complex Design 36",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_37_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_37_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_37_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_37_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_37_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_37",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 37
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_37"
+        ]
+      },
+      "name": "Complex Design 37",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_38_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_38_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_38_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_38_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_38_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_38",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 38
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_38"
+        ]
+      },
+      "name": "Complex Design 38",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_39_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_39_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_39_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_39_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_39_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_39",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 39
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_39"
+        ]
+      },
+      "name": "Complex Design 39",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_40_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_40_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_40_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_40_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_40_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_40",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 40
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_40"
+        ]
+      },
+      "name": "Complex Design 40",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_41_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_41_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_41_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_41_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_41_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_41",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 41
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_41"
+        ]
+      },
+      "name": "Complex Design 41",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_42_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_42_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_42_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_42_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_42_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_42",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 42
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_42"
+        ]
+      },
+      "name": "Complex Design 42",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_43_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_43_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_43_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_43_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_43_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_43",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 43
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_43"
+        ]
+      },
+      "name": "Complex Design 43",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_44_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_44_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_44_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_44_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_44_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_44",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 44
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_44"
+        ]
+      },
+      "name": "Complex Design 44",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_45_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_45_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_45_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_45_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_45_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_45",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 45
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_45"
+        ]
+      },
+      "name": "Complex Design 45",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_46_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_46_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_46_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_46_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_46_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_46",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 46
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_46"
+        ]
+      },
+      "name": "Complex Design 46",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_47_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_47_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_47_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_47_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_47_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_47",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 47
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_47"
+        ]
+      },
+      "name": "Complex Design 47",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_48_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_48_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_48_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_48_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_48_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_48",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 48
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_48"
+        ]
+      },
+      "name": "Complex Design 48",
+      "type": "ComplexDesign"
+    },
+    {
+      "components": [
+        {
+          "id": "comp_49_0",
+          "name": "Component 0",
+          "properties": {
+            "key1": "value1",
+            "key2": 0,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_49_1",
+          "name": "Component 1",
+          "properties": {
+            "key1": "value1",
+            "key2": 1,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_49_2",
+          "name": "Component 2",
+          "properties": {
+            "key1": "value1",
+            "key2": 2,
+            "key3": true
+          }
+        },
+        {
+          "id": "comp_49_3",
+          "name": "Component 3",
+          "properties": {
+            "key1": "value1",
+            "key2": 3,
+            "key3": false
+          }
+        },
+        {
+          "id": "comp_49_4",
+          "name": "Component 4",
+          "properties": {
+            "key1": "value1",
+            "key2": 4,
+            "key3": true
+          }
+        }
+      ],
+      "id": "complex_49",
+      "metadata": {
+        "attributes": {
+          "complexity": "high",
+          "index": 49
+        },
+        "tags": [
+          "test",
+          "complex",
+          "item_49"
+        ]
+      },
+      "name": "Complex Design 49",
+      "type": "ComplexDesign"
+    }
+  ]
+}
