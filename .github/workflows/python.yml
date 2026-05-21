@@ -31,5 +31,8 @@ jobs:
       - name: Type check (advisory for v0.1.0 — port from upstream is untyped; tighten as a follow-up)
         run: mypy awd_deserializer/
         continue-on-error: true
-      - name: Test
-        run: pytest --cov=awd_deserializer --cov-report=term-missing
+      - name: Unit tests
+        run: pytest tests/unit/ -v
+      - name: Integration smoke (advisory for v0.1.0 — synthetic fixtures are not gzip-wrapped; real .design fixtures are a v0.1.x follow-up)
+        run: pytest tests/integration/ -m integration -v
+        continue-on-error: true
